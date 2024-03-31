@@ -15,5 +15,4 @@ user=$3
 ssh_path=$4 
 target="$user@$ip:~/"
 
-scp -i "$ssh_path" -T "$file_path" "$target" 
-
+scp -i "$ssh_path" -o StrictHostKeyChecking=no "$file_path" "$target" 
