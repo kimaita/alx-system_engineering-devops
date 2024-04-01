@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # Installs and configures HAProxy on a Ubuntu 16.04 server
 
-apt update && apt upgrade -y
-apt-get install --no-install-recommends software-properties-common
-add-apt-repository ppa:vbernat/haproxy-2.0 -y
-apt-get install haproxy=2.0.\* -y
-echo 'ENABLED=1' >> /etc/default/haproxy
+sudo apt update && sudo apt upgrade -y
+sudo apt-get install --no-install-recommends software-properties-common
+sudo add-apt-repository ppa:vbernat/haproxy-2.0 -y
+sudo apt-get install haproxy=2.0.\* -y
+echo ENABLED=1 | sudo tee -a /etc/default/haproxy
 
 haprox_fe='
 frontend haproxy-main
@@ -19,7 +19,6 @@ backend webservers
     server web-01	54.208.71.151:80 check
     server web-02	100.25.34.99:80 check'
 
-echo "$haprox_fe" >> /etc/haproxy/haproxy.cfg
-echo "$haprox_be" >> /etc/haproxy/haproxy.cfg
+echo "$haprox_fe $haprox_be" | sudo tee -a /etc/haproxy/haproxy.cfg
 
 /etc/init.d/haproxy reload
