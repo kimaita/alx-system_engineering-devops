@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC2016
+
+new_header="add_header X-Served-By $HOSTNAME;"
+search='try_files $uri $uri\/ =404;'
+sudo sed -i "/$search/a $new_header" /etc/nginx/sites-available/default
+sudo nginx -s reload
