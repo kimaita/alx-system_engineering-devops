@@ -1,7 +1,27 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2016
 
-new_header="add_header X-Served-By $HOSTNAME;"
-search='try_files $uri $uri\/ =404;'
-sudo sed -i "/$search/a $new_header" /etc/nginx/sites-available/default
-sudo nginx -s reload
+apt-get -y update
+apt-get -y install nginx
+service nginx start
+
+echo Hello World! > /var/www/html/index.html
+
+search="server_name _;"
+#Permanently Moved
+redirect="\\\trewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4\n permanent;"
+sed -i "/$search/a $redirect" /etc/nginx/sites-available/default
+
+#404
+error_msg="Ceci n'est pas une page
+"
+echo "$error_msg" >> /var/www/html/404.html
+error="\\\terror_page 404 /404.html;\n \\tlocation  /404.html {\n\\t\\tinternal;\n\\t}"
+sed -i "/$search/a $error" /etc/nginx/sites-available/default
+
+#Custom header
+new_header="\\\t\\tadd_header X-Served-By $HOSTNAME;"
+search_header='^\t\ttry_files $uri $uri\/ =404;'
+sed -i "/$search_header/a $new_header" /etc/nginx/sites-available/default
+
+nginx -s reload
