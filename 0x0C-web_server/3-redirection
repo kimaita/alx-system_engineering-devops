@@ -7,7 +7,7 @@ service nginx start
 
 echo Hello World! > /var/www/html/index.html
 search="server_name _"
-redirect="rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;"
+redirect="\\\trewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;"
 sed -i "/$search/a $redirect" /etc/nginx/sites-available/default
 
 nginx -s reload
