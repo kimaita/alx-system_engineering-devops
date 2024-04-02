@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Installs and configures HAProxy on a Ubuntu 16.04 server
 
-sudo apt update && sudo apt upgrade -y
+sudo apt update -y
 sudo apt-get install --no-install-recommends software-properties-common
 sudo add-apt-repository ppa:vbernat/haproxy-2.0 -y
 sudo apt-get install haproxy=2.0.\* -y
