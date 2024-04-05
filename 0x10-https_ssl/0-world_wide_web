@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Display information about subdomains, given a domain name and optional sub somains
+
+function print_record() {
+    dig +nocomments +noquestion +nostats +nocmd "$2.$1" | 
+    awk -v subd="$2" \
+    '{print "The subdomain " subd " is a " $4 " record and points to " $5}'
+}
+
+if [ "$2" ]; then
+    subdomains=("$2")
+else
+    subdomains=(www lb-01 web-01 web-02)
+fi
+
+for subd in "${subdomains[@]}"; do
+    print_record "$1" "$subd"
+done
