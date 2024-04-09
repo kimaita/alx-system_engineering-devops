@@ -2,7 +2,7 @@
 Exec { path => '/bin/:/sbin/:/usr/bin/:/usr/sbin/' }
 
 package { 'nginx':
-    ensure => installed
+  ensure => installed
 }
 
 exec { 'configure_root':
@@ -17,5 +17,6 @@ exec { 'configure_redirect':
 }
 
 service { 'nginx' :
-    restart => 'reload'
+  ensure  => 'running',
+  restart => 'nginx -s reload'
 }
