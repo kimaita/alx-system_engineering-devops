@@ -1,0 +1,8 @@
+#!/usr/bin/env bash 
+# Executes the whoami command as a given user.
+if [[ -z "$1" ]]; then
+        whoami
+else
+        su -c whoami "$1"
+fi
+
