@@ -2,5 +2,4 @@
 # Sets up a server to receive http requests on port 80
 apt-get -y update
 apt-get install -y nginx
-sed -i '/^http {/a \    listen 80;' /etc/nginx/nginx.conf
 service nginx start
