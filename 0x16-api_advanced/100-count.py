@@ -5,7 +5,7 @@ the titles of hot articles of a sub.
 import requests
 
 
-def recurse(subreddit, word_list, freq={}, after=None, session=None):
+def count_words(subreddit, word_list, freq=None, after=None, session=None):
     """Queries the Reddit API for the titles of all hot posts
     for a given subreddit, then parses the title and prints keyword occurrence.
 
@@ -15,6 +15,9 @@ def recurse(subreddit, word_list, freq={}, after=None, session=None):
         freq {str: int}: keyword frequency dictionary
         after str: pagination
         session requests.Session: a session for persisting connection
+
+    Returns:
+        frequency dictionary or None if subreddit invalid
     """
 
     if after:
@@ -33,19 +36,30 @@ def recurse(subreddit, word_list, freq={}, after=None, session=None):
         resp_data = resp.json().get('data')
         next = resp_data.get('after')
         posts = resp_data.get('children')
-        hot_list += [post.get('data').get('title') for post in posts]
+
+        if freq is None:
+            word_list = [word.lower() for word in word_list]
+            freq = dict.fromkeys(word_list, 0)
+
+        for post in posts:
+            parse_title(post.get('data').get('title').lower(), freq)
+
         if next:
-            return recurse(subreddit, hot_list, next, session)
-        return hot_list
+            return count_words(subreddit, word_list, freq, next, session)
+
+        for w in sorted(freq.items(), reverse=True, key=lambda x: x[1]):
+            if w[1]:
+                print("{}: {}".format(w[0], w[1]))
+
+        return freq
     except Exception:
         return None
 
+
 def parse_title(title, freq_dict):
-    """"""
+    """Counts the occurences of keywords in a sentence,
+    updating a frequency dictionary
+    """
     for word in title.split():
         if word in freq_dict:
             freq_dict[word] += 1
-
-    return freq_dict
-
-
