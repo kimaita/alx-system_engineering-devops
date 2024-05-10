@@ -3,6 +3,6 @@
 if [[ -z "$1" ]]; then
         whoami
 else
-        su -c whoami "$1"
+        sudo -u "$1" whoami
 fi
 
