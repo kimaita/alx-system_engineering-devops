@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # Configures Apache's ServerName directive
 echo 'ServerName 127.0.0.1' >> etc/apache2/apache2.conf
-service apache2 restart
+sudo service apache2 start
