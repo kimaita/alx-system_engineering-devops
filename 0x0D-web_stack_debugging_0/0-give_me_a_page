@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Installs Apache web server on an Ubuntu machine
+sudo apt update -y
+sudo apt install apache2
+sudo service apache2 restart
