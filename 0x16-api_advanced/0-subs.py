@@ -17,7 +17,7 @@ def number_of_subscribers(subreddit):
 
     endpoint = "https://www.reddit.com/r/{0}/about.json".format(subreddit)
     header = {'user-agent': 'alx-api_advanced (u/kimaita)'}
-    resp = requests.get(endpoint, headers=header)
+    resp = requests.get(endpoint, headers=header, allow_redirects=False)
     try:
         resp_json = resp.json()
         count = resp_json['data'].get('subscribers', 0)
