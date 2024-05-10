@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# Installs Apache web server on an Ubuntu machine
-sudo apt update -y
-sudo apt install apache2
-sudo service apache2 restart
+# Configures Apache's ServerName directive
+echo 'ServerName 127.0.0.1' >> etc/apache2/apache2.conf
+service apache2 restart
