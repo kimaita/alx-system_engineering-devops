@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Uses `dig` to look up information about a given domain and its subdomains
+# shellcheck disable=SC2086
+
+look_up(){
+    dig +nocmd +nocomments +nostats +noquestion "$1.$2" |
+    awk -v subdom="$1" '{print "The subdomain "subdom" is a "$4" record and points to "$5}'
+}
+
+domain=$1
+
+if [[ -n "$2" ]]; then
+    look_up "$2" "$domain"
+else
+    subdomains=(www lb-01 web-01 web-02)
+    for subdom in "${subdomains[@]}"
+    do
+        look_up "$subdom" "$domain"
+    done
+fi
+
