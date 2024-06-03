@@ -25,6 +25,18 @@ def write_to_json(data):
         json.dump(data, file)
 
 
+def process_todo(todo, emp_lookup):
+    """Transform a todo into a dict for writing out"""
+
+    task = {
+        "username": emp_lookup[todo.get("userId")],
+        "task": todo.get("title"),
+        "completed": todo.get("completed"),
+    }
+
+    return task
+
+
 if __name__ == "__main__":
     api = "https://jsonplaceholder.typicode.com"
     emp_endpoint = f"{api}/users"
@@ -33,14 +45,11 @@ if __name__ == "__main__":
     employees = requests.get(emp_endpoint).json()
     todos = requests.get(todo_endpoint).json()
     emp_lookup = {emp.get("id"): emp.get("username") for emp in employees}
-    data = dict.fromkeys(emp_lookup.keys(), [])
+
+    data = {}
     for todo in todos:
-        emp_id = todo.get("userId")
-        task = {
-            "username": emp_lookup[emp_id],
-            "task": todo.get("title"),
-            "completed": todo.get("completed"),
-        }
-        data.get(emp_id).append(task)
+        task = process_todo(todo, emp_lookup)
+        id = todo.get("userId")
+        data.setdefault(id, []).append(task)
 
     write_to_json(data)
