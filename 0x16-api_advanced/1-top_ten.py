@@ -14,14 +14,11 @@ def top_ten(subreddit):
 
     url = "https://www.reddit.com/r/{}/hot.json?count=10".format(subreddit)
     headers = {"user-agent": "alx-api_advanced (u/kimaita)"}
-    resp = requests.get(url, headers=headers)
+    resp = requests.get(url, headers=headers, allow_redirects=False)
     try:
         resp_json = resp.json()
         posts = resp_json["data"].get("children")
-        if not posts:
-            print(None)
-        else:
-            for post in posts:
-                print(post["data"].get("title"))
+        for post in posts:
+            print(post["data"].get("title"))
     except Exception:
         print(None)
