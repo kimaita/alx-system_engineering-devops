@@ -12,7 +12,7 @@ def top_ten(subreddit):
     subreddit (str): subreddit to get hot posts.
     """
 
-    url = "https://www.reddit.com/r/{}/hot.json?count=10".format(subreddit)
+    url = "https://www.reddit.com/r/{}/hot.json?limit=10".format(subreddit)
     headers = {"user-agent": "alx-api_advanced (u/kimaita)"}
     resp = requests.get(url, headers=headers, allow_redirects=False)
     try:
