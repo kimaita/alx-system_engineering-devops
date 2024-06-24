@@ -26,8 +26,8 @@ A typo in the WordPress configuration file `wp-settings.php` had WP trying to fi
 
 ## Resolution and Recovery
 
-The fix was straughforward: replacing the errorneous `.phpp` extension with the correct `.php` extension and restarting the server
+The fix was straighforward: replacing the errorneous `.phpp` extension with the correct `.php` extension and restarting the server
 
 ## Corrective and Preventative Measures
 
-We have developed a script for checking correctness of WordPress configuration files to avoid server errors stemming from server misconfiguration.
+We have developed a script for checking correctness of WordPress configuration files to avoid server errors stemming from misconfiguration.
